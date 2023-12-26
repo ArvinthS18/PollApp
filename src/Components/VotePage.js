@@ -1,5 +1,36 @@
 import React, { useState, useEffect } from "react";
-import { TextField, Button, Card, CardContent } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Card,
+  CardContent,
+  FormControl,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
+  Typography,
+  createTheme,
+  ThemeProvider,
+  Grid,
+} from "@mui/material";
+import ResponsiveAppBar from "./ResponsiveAppBar";
+
+const theme = createTheme({
+  typography: {
+    fontFamily: "'Courier New', monospace",
+  },
+  palette: {
+    primary: {
+      main: "#1976D2",
+    },
+    secondary: {
+      main: "#4CAF50",
+    },
+    text: {
+      primary: "#333",
+    },
+  },
+});
 
 function App() {
   const [polls, setPolls] = useState([]);
@@ -68,60 +99,101 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <h1 style={{ textAlign: "center" }}>Voting UI</h1>
-      <div style={{ margin: "0 auto", maxWidth: 400 }}>
-        <TextField
-          label="Filter by ID"
-          variant="outlined"
-          fullWidth
-          margin="normal"
-          value={filterId}
-          onChange={handleFilterChange}
-          placeholder="Enter ID"
-          autoComplete="off" // Add this line to disable auto-completion
-        />
-        {filteredPoll && (
-          <Card>
-            <CardContent>
-              <h2 style={{ textAlign: "center" }}>{filteredPoll.pollName}</h2>
-              <p>{filteredPoll.question}</p>
-              <form>
-                {filteredPoll.options.map((option, index) => (
-                  <div key={index} style={{ marginBottom: 10 }}>
-                    <label>
-                      <input
-                        type="radio"
-                        value={option}
-                        checked={selectedOption === option}
+    <ThemeProvider theme={theme}>
+      <>
+        <ResponsiveAppBar />
+        <div
+          className="App"
+          style={{
+            textAlign: "center",
+            padding: "20px",
+            backgroundColor: "#f5f5f5",
+            minHeight: "100vh",
+          }}
+        >
+          <Typography
+            variant="h4"
+            color="primary"
+            style={{ marginBottom: "20px" }}
+          >
+            Voting UI
+          </Typography>
+          <Grid container spacing={2} justifyContent="center">
+            <Grid item xs={12} sm={8} md={6}>
+              <TextField
+                label="Filter by ID"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                value={filterId}
+                onChange={handleFilterChange}
+                placeholder="Enter ID"
+                autoComplete="off"
+                style={{ marginBottom: "50px" }}
+              />
+
+              {filteredPoll && (
+                <Card variant="outlined" style={{ height: "400px" }}>
+                  <CardContent>
+                    <Typography variant="h5" color="primary" gutterBottom>
+                      {filteredPoll.pollName}
+                    </Typography>
+                    <Typography color="textPrimary" paragraph>
+                      {filteredPoll.question}
+                    </Typography>
+                    <FormControl component="fieldset">
+                      <RadioGroup
+                        value={selectedOption}
                         onChange={handleOptionChange}
-                      />
-                      {option}
-                    </label>
-                  </div>
-                ))}
-              </form>
+                      >
+                        {filteredPoll.options.map((option, index) => (
+                          <FormControlLabel
+                            key={index}
+                            value={option}
+                            control={<Radio color="primary" />}
+                            label={option}
+                          />
+                        ))}
+                      </RadioGroup>
+                    </FormControl>
+                    <Typography
+                      style={{
+                        marginTop: "20px",
+                        color: theme.palette.text.primary,
+                      }}
+                    >
+                      Selected Option: {selectedOption}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              )}
+            </Grid>
+          </Grid>
+          {filteredPoll && (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                marginTop: "20px",
+              }}
+            >
               <Button
                 variant="contained"
+                color="primary"
                 onClick={handleVoteSubmit}
                 disabled={!selectedOption}
-                style={{ marginTop: 10, marginRight: 10 }}
+                style={{ marginRight: "10px" }}
               >
                 Submit Vote
               </Button>
-              <Button
-                variant="contained"
-                onClick={resetUI}
-                style={{ marginTop: 10 }}
-              >
+              <Button variant="contained" color="secondary" onClick={resetUI}>
                 Reset UI
               </Button>
-              <p style={{ marginTop: 10 }}>Selected Option: {selectedOption}</p>
-            </CardContent>
-          </Card>
-        )}
-      </div>
-    </div>
+            </div>
+          )}
+        </div>
+      </>
+    </ThemeProvider>
   );
 }
 

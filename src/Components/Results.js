@@ -13,18 +13,24 @@ import {
   ListItemText,
   createTheme,
   ThemeProvider,
+  Box,
 } from "@mui/material";
+import ResponsiveAppBar from "./ResponsiveAppBar";
+import StarIcon from "@mui/icons-material/Star";
 
 const theme = createTheme({
   typography: {
     fontFamily: "'Courier New', monospace",
+    heading: {
+      color: "#1976D2",
+    },
   },
   palette: {
     primary: {
-      main: "#1976D2", // Change this to your preferred primary color
+      main: "#1976D2",
     },
     secondary: {
-      main: "#4CAF50", // Change this to your preferred secondary color
+      main: "#4CAF50",
     },
     // Add a custom red color
     red: {
@@ -56,19 +62,16 @@ function App() {
       setFilteredPoll(foundPoll);
 
       if (foundPoll) {
-        // Count occurrences of each name in the "votes" array
         const voteCounts = foundPoll.votes.reduce((acc, name) => {
           acc[name] = (acc[name] || 0) + 1;
           return acc;
         }, {});
 
-        // Find the name with the maximum count
         const maxVotes = Math.max(...Object.values(voteCounts));
         const leaders = Object.keys(voteCounts).filter(
           (name) => voteCounts[name] === maxVotes
         );
 
-        // Set the leader(s)
         setLeader(leaders.join(", "));
       } else {
         setLeader(null);
@@ -81,77 +84,90 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <div
-        style={{
-          padding: "20px",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Typography variant="h4">Polls Data</Typography>
-        <div style={{ margin: "10px 0" }}>
+      <>
+        <ResponsiveAppBar theme={theme} />
+        <Box
+          sx={{
+            padding: "20px",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Typography
+            variant="h4"
+            sx={{ color: theme.typography.heading.color, marginBottom: "20px" }}
+          >
+            Polls Data
+          </Typography>
           <TextField
             type="text"
             value={filterId}
             onChange={handleFilterChange}
             label="Enter Poll ID"
             variant="outlined"
+            sx={{ width: "25%", marginBottom: "20px" }}
           />
-        </div>
-        {filteredPoll && (
-          <Paper
-            elevation={3}
-            style={{ marginBottom: "20px", padding: "15px", width: "50%" }}
-          >
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>ID</TableCell>
-                  <TableCell>Votes</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                <TableRow key={filteredPoll.id}>
-                  <TableCell>{filteredPoll.id}</TableCell>
-                  <TableCell>{filteredPoll.votes.join(", ")}</TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </Paper>
-        )}
-        {leader && (
-          <Paper
-            elevation={3}
-            style={{ marginBottom: "20px", padding: "15px", width: "50%" }}
-          >
-            <Typography variant="h6">Leaderboard</Typography>
-            <Typography
-              style={{ color: theme.palette.red.main }}
-            >{`${leader} is taking the lead!`}</Typography>
-          </Paper>
-        )}
-        {filteredPoll && (
-          <Paper
-            elevation={3}
-            style={{ marginBottom: "20px", padding: "15px", width: "50%" }}
-          >
-            <Typography variant="h6">Results</Typography>
-            <List>
-              {Object.entries(
-                filteredPoll.votes.reduce((acc, name) => {
-                  acc[name] = (acc[name] || 0) + 1;
-                  return acc;
-                }, {})
-              ).map(([label, votes], index) => (
-                <ListItem key={index}>
-                  <ListItemText primary={`${label} - ${votes} votes`} />
-                </ListItem>
-              ))}
-            </List>
-          </Paper>
-        )}
-      </div>
+          {filteredPoll && (
+            <Paper
+              elevation={3}
+              sx={{ marginBottom: "20px", padding: "15px", width: "50%" }}
+            >
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>ID</TableCell>
+                    <TableCell>Votes</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  <TableRow key={filteredPoll.id}>
+                    <TableCell>{filteredPoll.id}</TableCell>
+                    <TableCell>{filteredPoll.votes.join(", ")}</TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </Paper>
+          )}
+          {leader && (
+            <Paper
+              elevation={3}
+              sx={{ marginBottom: "20px", padding: "15px", width: "50%" }}
+            >
+              <Typography
+                variant="h6"
+                sx={{ display: "flex", alignItems: "center" }}
+              >
+                Leaderboard{" "}
+                <StarIcon fontSize="small" sx={{ marginLeft: "5px" }} />
+              </Typography>
+              <Typography
+                sx={{ color: theme.palette.red.main, marginTop: "10px" }}
+              >{`${leader} is taking the lead!`}</Typography>
+            </Paper>
+          )}
+          {filteredPoll && (
+            <Paper
+              elevation={3}
+              sx={{ marginBottom: "20px", padding: "15px", width: "50%" }}
+            >
+              <Typography variant="h6">Results</Typography>
+              <List>
+                {Object.entries(
+                  filteredPoll.votes.reduce((acc, name) => {
+                    acc[name] = (acc[name] || 0) + 1;
+                    return acc;
+                  }, {})
+                ).map(([label, votes], index) => (
+                  <ListItem key={index}>
+                    <ListItemText primary={`${label} - ${votes} votes`} />
+                  </ListItem>
+                ))}
+              </List>
+            </Paper>
+          )}
+        </Box>{" "}
+      </>
     </ThemeProvider>
   );
 }
