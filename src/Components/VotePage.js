@@ -129,7 +129,7 @@ function App() {
                 onChange={handleFilterChange}
                 placeholder="Enter ID"
                 autoComplete="off"
-                style={{ marginBottom: "50px" }}
+                style={{ marginBottom: "50px", width: "10cm" }}
               />
 
               {filteredPoll && (
@@ -159,7 +159,9 @@ function App() {
                     <Typography
                       style={{
                         marginTop: "20px",
-                        color: theme.palette.text.primary,
+                        color: selectedOption
+                          ? "red"
+                          : theme.palette.text.primary,
                       }}
                     >
                       Selected Option: {selectedOption}
