@@ -546,7 +546,7 @@ function App() {
                 <Grid item xs={12} md={6}>
                   <Paper elevation={3} sx={{ padding: "15px" }}>
                     <Typography variant="h6" sx={{ marginBottom: "10px" }}>
-                      Poll Details
+                      <b>Poll Details</b>
                     </Typography>
                     <Typography variant="body1">
                       <strong>ID:</strong> {filteredPoll.id}
@@ -581,7 +581,7 @@ function App() {
                 <Grid item xs={12} md={6}>
                   <Paper elevation={3} sx={{ padding: "15px" }}>
                     <Typography variant="h6" sx={{ marginBottom: "10px" }}>
-                      Votes
+                      <b>Votes</b>
                     </Typography>
                     <Table>
                       <TableHead>
@@ -606,7 +606,9 @@ function App() {
                 elevation={3}
                 sx={{ padding: "15px", marginTop: "20px", textAlign: "center" }}
               >
-                <Typography variant="h6">Leader(WON)</Typography>
+                <Typography variant="h6">
+                  <b>Leader</b>(WON)
+                </Typography>
                 <StarIcon color="secondary" sx={{ fontSize: 40 }} />
                 <Typography variant="body1">{leader.leaders}</Typography>
               </Paper>
