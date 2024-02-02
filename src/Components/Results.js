@@ -14,6 +14,8 @@
 //   Box,
 //   Container,
 //   Grid,
+//   Card,
+//   Tooltip,
 // } from "@mui/material";
 // import ResponsiveAppBar from "./ResponsiveAppBar";
 // import StarIcon from "@mui/icons-material/Star";
@@ -175,160 +177,198 @@
 //     <ThemeProvider theme={theme}>
 //       <>
 //         <ResponsiveAppBar theme={theme} />
-//         <Container>
-//           <Box
-//             sx={{
-//               padding: "20px",
-//               display: "flex",
-//               flexDirection: "column",
-//               alignItems: "center",
-//             }}
-//           >
-//             <Typography
-//               variant="h4"
+//         <div
+//           className="App"
+//           style={{
+//             textAlign: "center",
+//             padding: "20px",
+//             backgroundColor: "#f5f5f5",
+//             minHeight: "100vh",
+//           }}
+//         >
+//           <Container>
+//             <Box
 //               sx={{
-//                 color: theme.typography.heading.color,
-//                 marginBottom: "20px",
+//                 padding: "20px",
+//                 display: "flex",
+//                 flexDirection: "column",
+//                 alignItems: "center",
 //               }}
 //             >
-//               Polls Data
-//             </Typography>
-
-//             <TextField
-//               label="Filter by ID"
-//               variant="outlined"
-//               fullWidth
-//               margin="normal"
-//               value={filterId}
-//               onChange={handleFilterChange}
-//               placeholder="Enter ID"
-//               autoComplete="off"
-//               error={Boolean(validationError)}
-//               helperText={validationError}
-//               style={{ marginBottom: "50px", width: "10cm" }}
-//             />
-
-//             <Button
-//               variant="contained"
-//               color="primary"
-//               onClick={handleGetResult}
-//               style={{ marginBottom: "20px" }}
-//             >
-//               Get Result
-//             </Button>
-
-//             {filteredPoll && (
-//               <Grid container spacing={3}>
-//                 <Grid item xs={12} md={6}>
-//                   <Paper elevation={3} sx={{ padding: "15px" }}>
-//                     <Typography variant="h6" sx={{ marginBottom: "10px" }}>
-//                       <b>Poll Details</b>
-//                     </Typography>
-//                     <Typography variant="body1">
-//                       <strong>ID:</strong> {filteredPoll.id}
-//                     </Typography>
-//                     <Typography variant="body1">
-//                       <strong>Poll Name:</strong> {filteredPoll.pollName}
-//                     </Typography>
-//                     <Typography variant="body1">
-//                       <strong>Question:</strong> {filteredPoll.question}
-//                     </Typography>
-//                     <Typography variant="body1">
-//                       <strong>Options:</strong>{" "}
-//                       {filteredPoll.options
-//                         .map(
-//                           (option) =>
-//                             `${option} (${
-//                               filteredPoll.votes.filter(
-//                                 (vote) => vote === option
-//                               ).length
-//                             } votes)`
-//                         )
-//                         .join(", ")}
-//                     </Typography>
-//                     <Typography variant="body1">
-//                       <strong>Total Votes:</strong> {filteredPoll.votes.length}
-//                     </Typography>
-//                     <Typography variant="body1">
-//                       <strong>Margin:</strong> {leader?.margin}
-//                     </Typography>
-//                   </Paper>
-//                 </Grid>
-//                 <Grid item xs={12} md={6}>
-//                   <Paper elevation={3} sx={{ padding: "15px" }}>
-//                     <Typography variant="h6" sx={{ marginBottom: "10px" }}>
-//                       <b>Votes</b>
-//                     </Typography>
-//                     <Table>
-//                       <TableHead>
-//                         <TableRow>
-//                           <TableCell>ID</TableCell>
-//                           <TableCell>Votes</TableCell>
-//                         </TableRow>
-//                       </TableHead>
-//                       <TableBody>
-//                         <TableRow key={filteredPoll.id}>
-//                           <TableCell>{filteredPoll.id}</TableCell>
-//                           <TableCell>{filteredPoll.votes.join(", ")}</TableCell>
-//                         </TableRow>
-//                       </TableBody>
-//                     </Table>
-//                   </Paper>
-//                 </Grid>
-//               </Grid>
-//             )}
-//             {leader && (
-//               <Paper
-//                 elevation={3}
-//                 sx={{ padding: "15px", marginTop: "20px", textAlign: "center" }}
-//               >
-//                 <Typography variant="h6">
-//                   <b>Leader</b>(WON)
-//                 </Typography>
-//                 <StarIcon color="secondary" sx={{ fontSize: 40 }} />
-//                 <Typography variant="body1">{leader.leaders}</Typography>
-//               </Paper>
-//             )}
-
-//             {timer > 0 && (
 //               <Typography
-//                 variant="body2"
+//                 variant="h4"
 //                 sx={{
-//                   marginTop: "20px",
-//                   color: theme.palette.primary.main,
-//                   position: "fixed",
-//                   bottom: "20px",
-//                   right: "20px",
+//                   color: theme.typography.heading.color,
+//                   marginBottom: "20px",
 //                 }}
 //               >
-//                 {formatTimeRemaining()}
+//                 Polls Data
 //               </Typography>
-//             )}
+//               <Card
+//                 elevation={3}
+//                 sx={{
+//                   padding: "20px",
+//                   marginBottom: "20px",
+//                   width: "100%",
+//                   maxWidth: "600px",
+//                 }}
+//               >
+//                 <TextField
+//                   label="Filter by ID"
+//                   variant="outlined"
+//                   fullWidth
+//                   margin="normal"
+//                   value={filterId}
+//                   onChange={handleFilterChange}
+//                   placeholder="Enter ID"
+//                   autoComplete="off"
+//                   error={Boolean(validationError)}
+//                   helperText={validationError}
+//                   style={{ marginBottom: "20px" }}
+//                 />
 
-//             <ToastContainer position="top-right" autoClose={3000} />
-//           </Box>
-//         </Container>
+//                 <Tooltip title="Get Result" arrow>
+//                   <Box sx={{ display: "flex", justifyContent: "center" }}>
+//                     <Button
+//                       variant="contained"
+//                       color="primary"
+//                       onClick={handleGetResult}
+//                       disabled={!filterId}
+//                     >
+//                       Get Result
+//                     </Button>
+//                   </Box>
+//                 </Tooltip>
+//               </Card>
 
-//         {/* Welcome Modal */}
-//         {/* <Modal
-//           open={showWelcomeModal}
-//           onClose={handleCloseWelcomeModal}
-//           title="Welcome to the Polls App"
-//         > */}
-//           {/* Enter your Poll ID to get started. */}
-//           {/* To view the poll result, enter the Poll ID and click the "Get Result"
-//           button.
-//         </Modal> */}
+//               {filteredPoll && (
+//                 <Grid container spacing={3}>
+//                   <Grid item xs={12} md={6}>
+//                     <Paper
+//                       elevation={3}
+//                       sx={{ padding: "15px", textAlign: "left" }}
+//                     >
+//                       <Typography
+//                         variant="h6"
+//                         sx={{ marginBottom: "10px", textAlign: "center" }}
+//                       >
+//                         <b>Poll Details</b>
+//                       </Typography>
+//                       <div style={{ textAlign: "left" }}>
+//                         <Typography variant="body1">
+//                           <strong>ID:</strong> {filteredPoll.id}
+//                         </Typography>
+//                         <Typography variant="body1">
+//                           <strong>Poll Name:</strong> {filteredPoll.pollName}
+//                         </Typography>
+//                         <Typography variant="body1">
+//                           <strong>Question:</strong> {filteredPoll.question}
+//                         </Typography>
+//                         <Typography variant="body1">
+//                           <strong>Options:</strong>{" "}
+//                           {filteredPoll.options
+//                             .map(
+//                               (option) =>
+//                                 `${option} (${
+//                                   filteredPoll.votes.filter(
+//                                     (vote) => vote === option
+//                                   ).length
+//                                 } votes)`
+//                             )
+//                             .join(", ")}
+//                         </Typography>
+//                         <Typography variant="body1">
+//                           <strong>Total Votes:</strong>{" "}
+//                           {filteredPoll.votes.length}
+//                         </Typography>
+//                         <Typography variant="body1">
+//                           <strong>Margin:</strong> {leader?.margin}
+//                         </Typography>
+//                       </div>
+//                     </Paper>
+//                   </Grid>
+//                   <Grid item xs={12} md={6}>
+//                     <Paper elevation={3} sx={{ padding: "15px" }}>
+//                       <Typography variant="h6" sx={{ marginBottom: "10px" }}>
+//                         <b>Votes</b>
+//                       </Typography>
+//                       <Table>
+//                         <TableHead>
+//                           <TableRow>
+//                             <TableCell>ID</TableCell>
+//                             <TableCell>Votes</TableCell>
+//                           </TableRow>
+//                         </TableHead>
+//                         <TableBody>
+//                           <TableRow key={filteredPoll.id}>
+//                             <TableCell>{filteredPoll.id}</TableCell>
+//                             <TableCell>
+//                               {filteredPoll.votes.join(", ")}
+//                             </TableCell>
+//                           </TableRow>
+//                         </TableBody>
+//                       </Table>
+//                     </Paper>
+//                   </Grid>
+//                 </Grid>
+//               )}
+//               {leader && (
+//                 <Paper
+//                   elevation={3}
+//                   sx={{
+//                     padding: "15px",
+//                     marginTop: "20px",
+//                     textAlign: "center",
+//                   }}
+//                 >
+//                   <Typography variant="h6">
+//                     <b>Leader</b>(WON)
+//                   </Typography>
+//                   <StarIcon color="secondary" sx={{ fontSize: 40 }} />
+//                   <Typography variant="body1">{leader.leaders}</Typography>
+//                 </Paper>
+//               )}
 
-//         {/* Guidelines Modal */}
-//         {/* <Modal
-//           open={showGuidelinesModal}
-//           onClose={handleCloseGuidelinesModal}
-//           title="Guidelines"
-//         >
-//           The session will expire after one minute. Follow these guidelines for
-//           a better experience.
-//         </Modal> */}
+//               {timer > 0 && (
+//                 <Typography
+//                   variant="body2"
+//                   sx={{
+//                     marginTop: "20px",
+//                     color: theme.palette.primary.main,
+//                     position: "fixed",
+//                     bottom: "20px",
+//                     right: "20px",
+//                   }}
+//                 >
+//                   {formatTimeRemaining()}
+//                 </Typography>
+//               )}
+
+//               <ToastContainer position="top-right" autoClose={3000} />
+//             </Box>
+//           </Container>
+
+//           {/* Welcome Modal */}
+//           <Modal
+//             open={showWelcomeModal}
+//             onClose={handleCloseWelcomeModal}
+//             title="Welcome to the Polls App"
+//           >
+//             {/* Enter your Poll ID to get started. */}
+//             To view the poll result, enter the Poll ID and click the "Get
+//             Result" button.
+//           </Modal>
+
+//           {/* Guidelines Modal */}
+//           <Modal
+//             open={showGuidelinesModal}
+//             onClose={handleCloseGuidelinesModal}
+//             title="Guidelines"
+//           >
+//             The session will expire after one minute. Follow these guidelines
+//             for a better experience.
+//           </Modal>
+//         </div>{" "}
 //       </>
 //     </ThemeProvider>
 //   );
@@ -352,7 +392,6 @@ import {
   Container,
   Grid,
   Card,
-  CardContent,
   Tooltip,
 } from "@mui/material";
 import ResponsiveAppBar from "./ResponsiveAppBar";
@@ -367,7 +406,6 @@ const theme = createTheme({
     heading: {
       color: "#1976D2",
     },
-    
   },
   palette: {
     primary: {
@@ -390,6 +428,7 @@ function App() {
   const [validationError, setValidationError] = useState("");
   const [sessionExpiration, setSessionExpiration] = useState(null);
   const [timer, setTimer] = useState(0);
+  const [showPollDetails, setShowPollDetails] = useState(false);
 
   const [showWelcomeModal, setShowWelcomeModal] = useState(true);
   const [showGuidelinesModal, setShowGuidelinesModal] = useState(false);
@@ -580,75 +619,12 @@ function App() {
                 </Tooltip>
               </Card>
 
-              {filteredPoll && (
-                <Grid container spacing={3}>
-                  <Grid item xs={12} md={6}>
-                    <Paper elevation={3} sx={{ padding: "15px" }}>
-                      <Typography variant="h6" sx={{ marginBottom: "10px" }}>
-                        <b>Poll Details</b>
-                      </Typography>
-                      <Typography variant="body1">
-                        <strong>ID:</strong> {filteredPoll.id}
-                      </Typography>
-                      <Typography variant="body1">
-                        <strong>Poll Name:</strong> {filteredPoll.pollName}
-                      </Typography>
-                      <Typography variant="body1">
-                        <strong>Question:</strong> {filteredPoll.question}
-                      </Typography>
-                      <Typography variant="body1">
-                        <strong>Options:</strong>{" "}
-                        {filteredPoll.options
-                          .map(
-                            (option) =>
-                              `${option} (${
-                                filteredPoll.votes.filter(
-                                  (vote) => vote === option
-                                ).length
-                              } votes)`
-                          )
-                          .join(", ")}
-                      </Typography>
-                      <Typography variant="body1">
-                        <strong>Total Votes:</strong>{" "}
-                        {filteredPoll.votes.length}
-                      </Typography>
-                      <Typography variant="body1">
-                        <strong>Margin:</strong> {leader?.margin}
-                      </Typography>
-                    </Paper>
-                  </Grid>
-                  <Grid item xs={12} md={6}>
-                    <Paper elevation={3} sx={{ padding: "15px" }}>
-                      <Typography variant="h6" sx={{ marginBottom: "10px" }}>
-                        <b>Votes</b>
-                      </Typography>
-                      <Table>
-                        <TableHead>
-                          <TableRow>
-                            <TableCell>ID</TableCell>
-                            <TableCell>Votes</TableCell>
-                          </TableRow>
-                        </TableHead>
-                        <TableBody>
-                          <TableRow key={filteredPoll.id}>
-                            <TableCell>{filteredPoll.id}</TableCell>
-                            <TableCell>
-                              {filteredPoll.votes.join(", ")}
-                            </TableCell>
-                          </TableRow>
-                        </TableBody>
-                      </Table>
-                    </Paper>
-                  </Grid>
-                </Grid>
-              )}
               {leader && (
                 <Paper
                   elevation={3}
                   sx={{
                     padding: "15px",
-                    marginTop: "20px",
+                    marginBottom: "20px",
                     textAlign: "center",
                   }}
                 >
@@ -657,7 +633,92 @@ function App() {
                   </Typography>
                   <StarIcon color="secondary" sx={{ fontSize: 40 }} />
                   <Typography variant="body1">{leader.leaders}</Typography>
+                  <Box mt={2}>
+                    <Button
+                      variant="outlined"
+                      color="primary"
+                      onClick={() => setShowPollDetails(!showPollDetails)}
+                    >
+                      {showPollDetails
+                        ? "Hide Details"
+                        : "View Complete Details"}
+                    </Button>
+                  </Box>
                 </Paper>
+              )}
+
+              {showPollDetails && filteredPoll && (
+                <>
+                  <Grid container spacing={3}>
+                    <Grid item xs={12} md={6}>
+                      <Paper
+                        elevation={3}
+                        sx={{ padding: "15px", textAlign: "left" }}
+                      >
+                        <Typography
+                          variant="h6"
+                          sx={{ marginBottom: "10px", textAlign: "center" }}
+                        >
+                          <b>Poll Details</b>
+                        </Typography>
+                        <div style={{ textAlign: "left" }}>
+                          <Typography variant="body1">
+                            <strong>ID:</strong> {filteredPoll.id}
+                          </Typography>
+                          <Typography variant="body1">
+                            <strong>Poll Name:</strong> {filteredPoll.pollName}
+                          </Typography>
+                          <Typography variant="body1">
+                            <strong>Question:</strong> {filteredPoll.question}
+                          </Typography>
+                          <Typography variant="body1">
+                            <strong>Options:</strong>{" "}
+                            {filteredPoll.options
+                              .map(
+                                (option) =>
+                                  `${option} (${
+                                    filteredPoll.votes.filter(
+                                      (vote) => vote === option
+                                    ).length
+                                  } votes)`
+                              )
+                              .join(", ")}
+                          </Typography>
+                          <Typography variant="body1">
+                            <strong>Total Votes:</strong>{" "}
+                            {filteredPoll.votes.length}
+                          </Typography>
+                          <Typography variant="body1">
+                            <strong>Margin:</strong> {leader?.margin}
+                          </Typography>
+                        </div>
+                      </Paper>
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                      <Paper elevation={3} sx={{ padding: "15px" }}>
+                        <Typography variant="h6" sx={{ marginBottom: "10px" }}>
+                          <b>Votes</b>
+                        </Typography>
+                        <Table>
+                          <TableHead>
+                            <TableRow>
+                              <TableCell>ID</TableCell>
+                              <TableCell>Votes</TableCell>
+                            </TableRow>
+                          </TableHead>
+                          <TableBody>
+                            <TableRow key={filteredPoll.id}>
+                              <TableCell>{filteredPoll.id}</TableCell>
+                              <TableCell>
+                                {filteredPoll.votes.join(", ")}
+                              </TableCell>
+                            </TableRow>
+                          </TableBody>
+                        </Table>
+                      </Paper>
+                    </Grid>
+                  </Grid>
+                </>
               )}
 
               {timer > 0 && (
