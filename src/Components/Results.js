@@ -353,6 +353,7 @@ import {
   Grid,
   Card,
   CardContent,
+  Tooltip,
 } from "@mui/material";
 import ResponsiveAppBar from "./ResponsiveAppBar";
 import StarIcon from "@mui/icons-material/Star";
@@ -366,6 +367,7 @@ const theme = createTheme({
     heading: {
       color: "#1976D2",
     },
+    
   },
   palette: {
     primary: {
@@ -564,15 +566,18 @@ function App() {
                   style={{ marginBottom: "20px" }}
                 />
 
-                <Box sx={{ display: "flex", justifyContent: "center" }}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleGetResult}
-                  >
-                    Get Result
-                  </Button>
-                </Box>
+                <Tooltip title="Get Result" arrow>
+                  <Box sx={{ display: "flex", justifyContent: "center" }}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handleGetResult}
+                      disabled={!filterId}
+                    >
+                      Get Result
+                    </Button>
+                  </Box>
+                </Tooltip>
               </Card>
 
               {filteredPoll && (
