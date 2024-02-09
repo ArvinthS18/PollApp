@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import PollCreation from "./Components/PollCreation";
 import VotePage from "./Components/VotePage";
 import Results from "./Components/Results";
+import Login from "./Components/Login";
+import Register from "./Components/Register";
 
 const App = () => {
   return (
@@ -18,3 +20,20 @@ const App = () => {
 };
 
 export default App;
+// import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+// import Register from "./Components/Register";
+// import Login from "./Components/Login";
+// import EditPassword from "./Components/EditPassword";
+// function App() {
+//   return (
+//     <Router>
+//       <Routes>
+//         <Route exact path="/" element={<Register />} />
+//         <Route path="/login" element={<Login />} />
+//         <Route path="/editpassword" element={<EditPassword />} />
+//       </Routes>
+//     </Router>
+//   );
+// }
+
+// export default App;
