@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import React from "react";
 import {
   Container,
@@ -17,7 +18,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useForm } from "react-hook-form";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-
+import ResponsiveAppBar from "./ResponsiveAppBar";
 const theme = createTheme({
   typography: {
     fontFamily: '"Roboto Mono", monospace',
@@ -84,6 +85,7 @@ const Register = () => {
 
   return (
     <ThemeProvider theme={theme}>
+      <ResponsiveAppBar />
       <Container
         maxWidth="sm"
         sx={{

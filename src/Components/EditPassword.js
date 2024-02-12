@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import {
@@ -17,6 +18,7 @@ import {
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ResponsiveAppBar from "./ResponsiveAppBar";
 
 const theme = createTheme({
   typography: {
@@ -71,6 +73,7 @@ const EditPassword = () => {
 
   return (
     <ThemeProvider theme={theme}>
+      <ResponsiveAppBar />
       <Container
         maxWidth="sm"
         sx={{
