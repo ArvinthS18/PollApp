@@ -7,12 +7,18 @@ import {
   Card,
   CardContent,
   Link,
+  Box,
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const theme = createTheme();
+// Define a custom theme with monospace font
+const theme = createTheme({
+  typography: {
+    fontFamily: ["'Roboto Mono'", "monospace"].join(","),
+  },
+});
 
 const API_URL = "https://657aaf5e1acd268f9afb9276.mockapi.io/api/v1/register";
 
@@ -66,11 +72,12 @@ const Login = () => {
           justifyContent: "center",
         }}
       >
-        <Card>
+        <Typography variant="h4" align="center" color="primary" gutterBottom>
+          Login
+        </Typography>
+        {/* <Card sx={{ backgroundColor: "whitesmoke" }}> */}
+        <Card sx={{ backgroundColor: "#ffffff", boxShadow: 6 }}>
           <CardContent>
-            <Typography variant="h5" align="center" gutterBottom>
-              Login
-            </Typography>
             {error && (
               <Typography
                 variant="body2"
@@ -88,8 +95,6 @@ const Login = () => {
                 name="username"
                 value={formData.username}
                 onChange={handleChange}
-                variant="outlined"
-                required
                 sx={{ mb: 2 }}
                 autoComplete="off" // Disable autocomplete
                 InputProps={{ disableUnderline: true }} // Remove the underline
@@ -101,13 +106,11 @@ const Login = () => {
                 type="password"
                 value={formData.password}
                 onChange={handleChange}
-                variant="outlined"
-                required
                 sx={{ mb: 2 }}
                 autoComplete="off" // Disable autocomplete
                 InputProps={{ disableUnderline: true }} // Remove the underline
               />
-              <Button
+              {/* <Button
                 type="submit"
                 variant="contained"
                 color="primary"
@@ -115,7 +118,17 @@ const Login = () => {
                 sx={{ mt: 2 }}
               >
                 Log in
-              </Button>
+              </Button> */}
+              <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  sx={{ width: "20%" }}
+                >
+                  Login
+                </Button>
+              </Box>
               <Typography variant="body2" align="center" sx={{ mt: 2 }}>
                 <Link href="/editpassword" color="primary">
                   Forgot password?

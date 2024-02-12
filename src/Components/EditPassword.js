@@ -144,7 +144,7 @@ const EditPassword = () => {
                     type="submit"
                     variant="contained"
                     color="primary"
-                    sx={{ width: "50%" }}
+                    sx={{ width: "20%" }}
                   >
                     Update
                   </Button>
@@ -153,6 +153,12 @@ const EditPassword = () => {
             </CardContent>
           </Card>
         </Box>
+        <Typography variant="body2" align="center" sx={{ mt: 2 }}>
+          Back to{" "}
+          <Link href="/login" color="primary">
+            Login?
+          </Link>
+        </Typography>
       </Container>
       <Dialog open={openDialog} onClose={handleCloseDialog}>
         <DialogTitle>

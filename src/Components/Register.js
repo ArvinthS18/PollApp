@@ -10,6 +10,7 @@ import {
   MenuItem,
   IconButton,
   InputAdornment,
+  Box,
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { toast, ToastContainer } from "react-toastify";
@@ -17,7 +18,16 @@ import "react-toastify/dist/ReactToastify.css";
 import { useForm } from "react-hook-form";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
-const theme = createTheme();
+const theme = createTheme({
+  typography: {
+    fontFamily: '"Roboto Mono", monospace',
+  },
+  palette: {
+    primary: {
+      main: "#1976d2",
+    },
+  },
+});
 
 const API_URL = "https://657aaf5e1acd268f9afb9276.mockapi.io/api/v1/register";
 
@@ -74,16 +84,26 @@ const Register = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container maxWidth="sm" sx={{ mt: 4 }}>
-        <Card>
+      <Container
+        maxWidth="sm"
+        sx={{
+          mt: 4,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        {/* <Typography variant="h4" color="primary" align="center" gutterBottom>
+            Edit Password
+          </Typography> */}
+        <Typography variant="h4" align="center" gutterBottom color="primary">
+          Register
+        </Typography>
+        <Card sx={{ backgroundColor: "#ffffff", boxShadow: 6 }}>
           <CardContent>
-            <Typography variant="h5" align="center" gutterBottom>
-              Register
-            </Typography>
             <form onSubmit={handleSubmit(onSubmit)}>
               <TextField
                 {...register("username", {
-                  required: "Username is required",
                   minLength: {
                     value: 4,
                     message: "Username must be at least 4 characters",
@@ -101,7 +121,6 @@ const Register = () => {
                 fullWidth
                 label="Username"
                 variant="outlined"
-                required
                 autoComplete="off"
                 error={!!errors.username}
                 helperText={errors.username?.message}
@@ -109,7 +128,6 @@ const Register = () => {
               />
               <TextField
                 {...register("email", {
-                  required: "Email is required",
                   pattern: {
                     value: /\S+@\S+\.\S+/,
                     message: "Invalid email address",
@@ -119,7 +137,6 @@ const Register = () => {
                 label="Email"
                 type="email"
                 variant="outlined"
-                required
                 autoComplete="off"
                 error={!!errors.email}
                 helperText={errors.email?.message}
@@ -127,7 +144,6 @@ const Register = () => {
               />
               <TextField
                 {...register("password", {
-                  required: "Password is required",
                   minLength: {
                     value: 6,
                     message: "Password must be at least 6 characters",
@@ -137,7 +153,6 @@ const Register = () => {
                 label="Password"
                 type={showPassword ? "text" : "password"}
                 variant="outlined"
-                required
                 autoComplete="off"
                 error={!!errors.password}
                 helperText={errors.password?.message}
@@ -158,7 +173,6 @@ const Register = () => {
               />
               <TextField
                 {...register("confirmPassword", {
-                  required: "Confirm Password is required",
                   validate: (value) =>
                     value === passwordValue || "Passwords do not match",
                 })}
@@ -166,21 +180,17 @@ const Register = () => {
                 label="Confirm Password"
                 type="password"
                 variant="outlined"
-                required
                 autoComplete="off"
                 error={!!errors.confirmPassword}
                 helperText={errors.confirmPassword?.message}
                 sx={{ mb: 2 }}
               />
               <TextField
-                {...register("securityQuestion", {
-                  required: "Security question is required",
-                })}
+                {...register("securityQuestion")}
                 select
                 fullWidth
                 label="Security Question"
                 variant="outlined"
-                required
                 autoComplete="off"
                 error={!!errors.securityQuestion}
                 helperText={errors.securityQuestion?.message}
@@ -194,7 +204,6 @@ const Register = () => {
               </TextField>
               <TextField
                 {...register("securityAnswer", {
-                  required: "Security answer is required",
                   minLength: {
                     value: 4,
                     message: "Security answer must be 4 characters long",
@@ -203,21 +212,21 @@ const Register = () => {
                 fullWidth
                 label="Security Answer"
                 variant="outlined"
-                required
                 autoComplete="off"
                 error={!!errors.securityAnswer}
                 helperText={errors.securityAnswer?.message}
                 sx={{ mb: 2 }}
               />
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                fullWidth
-                sx={{ mt: 2 }}
-              >
-                Register
-              </Button>
+              <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  sx={{ width: "20%" }}
+                >
+                  Register
+                </Button>
+              </Box>
               <Typography variant="body2" align="center" sx={{ mt: 2 }}>
                 Already have an account?{" "}
                 <Link href="/login" color="primary">
